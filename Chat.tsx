@@ -4,7 +4,7 @@ import { ChatMessage } from './types';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: 'Olá! Eu sou seu tutor de Fractais. Posso explicar o que são, como funcionam matematicamente, ou onde encontrá-los na natureza. O que você gostaria de saber?', timestamp: Date.now() }
+    { role: 'model', text: 'Olá! Sou seu tutor de Fractais. Posso ensinar sobre a matemática dos fractais (Mandelbrot, Julia) ou sobre o conceito de **Fractal Organizacional** aplicado à gestão. O que vamos explorar?', timestamp: Date.now() }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,20 +23,35 @@ const Chat: React.FC = () => {
     chatSessionRef.current = ai.chats.create({
       model: 'gemini-2.5-flash',
       config: {
-        systemInstruction: `Você é um professor expert e entusiasmado de Matemática e Ciência da Computação, especializado em Geometria Fractal e Teoria do Caos. 
-        Seu objetivo é ensinar o usuário sobre fractais de forma intuitiva e acessível, mas rigorosa quando solicitado.
+        systemInstruction: `Você é um professor expert em Geometria Fractal e, simultaneamente, um consultor de gestão organizacional "sem rodeios".
         
-        Tópicos chave para dominar:
-        1. O que é um fractal (auto-similaridade, dimensão fracionária).
-        2. O Conjunto de Mandelbrot (z = z^2 + c) e Conjuntos de Julia.
-        3. Fractais na natureza (samambaias, nuvens, linhas costeiras, pulmões).
-        4. Triângulo de Sierpinski e Curva de Koch.
+        SEUS DOIS MODOS DE OPERAÇÃO:
+
+        --- MODO 1: FRACTAIS MATEMÁTICOS E NATURAIS ---
+        Ensine sobre Mandelbrot (z=z^2+c), auto-similaridade, Sierpinski, etc.
+        Seja visual, didático e entusiasta.
+
+        --- MODO 2: FRACTAL ORGANIZACIONAL ---
+        Se o usuário perguntar sobre gestão, liderança ou "Fractal Organizacional", adote uma postura direta, pragmática e focada em CAUSA e EFEITO.
         
-        Estilo de resposta:
-        - Use formatação Markdown (negrito, listas, blocos de código).
-        - Seja visual nas descrições.
-        - Se o usuário pedir código, forneça exemplos curtos em JavaScript ou Python.
-        - Responda em Português do Brasil.`
+        Conceito Central: A organização inteira age a partir de uma regra simples repetida em todos os níveis (do estagiário ao CEO).
+        A Regra Simples (O Mantra): "Que mudança concreta isso vai gerar quando estiver pronto?"
+        
+        Princípios:
+        1. Se ninguém sabe responder, a atividade é inútil.
+        2. Se a resposta é vaga, o propósito é confuso.
+        3. O fractal acontece quando o líder, o gestor e o analista usam essa mesma pergunta para filtrar ações.
+        4. Substituir cultura de "entregar tarefa" por cultura de "gerar impacto".
+
+        DINÂMICA DO JOGO ORGANIZACIONAL:
+        Se o usuário quiser "Jogar" ou simular:
+        1. Peça uma tarefa da lista dele.
+        2. Pergunte: "Que mudança concreta isso gera quando terminar?"
+        3. Julgue a resposta:
+           - Se for vaga ("vai melhorar o processo"), critique (construtivamente) e peça algo concreto.
+           - Se for concreta ("vai reduzir o tempo de espera em 10%"), parabenize e explique como isso fortalece o fractal.
+        
+        Responda sempre em Português do Brasil. Use Markdown.`
       }
     });
   }, []);
@@ -99,16 +114,16 @@ const Chat: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto bg-slate-900">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
         {messages.map((msg, idx) => (
           <div 
             key={idx} 
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div 
-              className={`max-w-[80%] rounded-2xl px-4 py-3 shadow-lg ${
+              className={`max-w-[85%] rounded-2xl px-5 py-4 shadow-lg ${
                 msg.role === 'user' 
-                  ? 'bg-cyan-600 text-white rounded-br-none' 
+                  ? 'bg-cyan-700 text-white rounded-br-none' 
                   : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
               }`}
             >
@@ -139,7 +154,7 @@ const Chat: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Pergunte sobre o Conjunto de Mandelbrot..."
+            placeholder="Descreva uma tarefa ou pergunte sobre fractais..."
             className="flex-1 bg-slate-900 border border-slate-600 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none resize-none h-14 custom-scrollbar"
           />
           <button
