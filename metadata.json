@@ -1,0 +1,5 @@
+{
+  "name": "Fractal Explorer AI",
+  "description": "An interactive educational tool to learn about fractals, featuring real-time mathematical rendering, AI-powered explanations, and a dedicated tutor chat.",
+  "requestFramePermissions": []
+}
